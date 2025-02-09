@@ -1,0 +1,4 @@
+0.make some field required in the field
+1.Work on styling
+2.make it to host on my github
+3.Work on deploying
