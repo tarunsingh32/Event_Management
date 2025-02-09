@@ -16,17 +16,18 @@ const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const { WebSocketServer } = require("ws");
 const connectDB = require("./config/db");
+const { default: Event } = require("./models/Event");
 
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "bsbsfbrnsftentwnnwnwn";
 
-// cloudinary.config({
-//    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//    api_key: process.env.CLOUDINARY_API_KEY,
-//    api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+cloudinary.config({
+   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+   api_key: process.env.CLOUDINARY_API_KEY,
+   api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Middleware to handle file uploads
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
@@ -139,25 +140,25 @@ app.post("/logout", (req, res) => {
 });
 
 
-const eventSchema = new mongoose.Schema({
-   owner: String,
-   title: String,
-   description: String,
-   organizedBy: String,
-   eventDate: Date,
-   eventTime: String,
-   location: String,
-   Participants: { type: Number, default: 0 },
-   Count: Number,
-   Income: Number,
-   ticketPrice: Number,
-   Quantity: Number,
-   image: String,
-   likes: Number,
-   Comment: [String],
-});
+// const eventSchema = new mongoose.Schema({
+//    // owner: String,
+//    title: String,
+//    description: String,
+//    organizedBy: String,
+//    eventDate: Date,
+//    eventTime: String,
+//    location: String,
+//    Participants: { type: Number, default: 0 },
+//    Count: Number,
+//    Income: Number,
+//    ticketPrice: Number,
+//    Quantity: Number,
+//    image: String,
+//    likes: Number,
+//    Comment: [String],
+// });
 
-const Event = mongoose.model("Event", eventSchema);
+// const Event = mongoose.model("Event", eventSchema);
 
 app.post("/createEvent", async (req, res) => {
    try {
