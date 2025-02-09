@@ -39,16 +39,16 @@ router.post("/register", async (req, res) => {
     jwt.sign(
        { email: userDoc.email, id: userDoc._id },
        process.env.JWT_SECRET,
-       { expiresIn: "7d" }, // Token expires in 7 days
+       { expiresIn: "7d" }, 
        (err, token) => {
           if (err) {
              return res.status(500).json({ error: "Failed to generate token" });
           }
  
           res.cookie("token", token, {
-             httpOnly: true,   // Prevents XSS attacks
-             secure: true,     // Only send over HTTPS
-             sameSite: "None", // Allows cross-site requests
+             httpOnly: true,  
+             secure: true,     
+             sameSite: "None", 
           }).json(userDoc);
        }
     );

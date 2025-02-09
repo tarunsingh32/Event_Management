@@ -9,7 +9,7 @@ export default function EventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [attendees, setAttendees] = useState(0);
-  const userId = 'current_user_id'; // Replace with the actual user ID
+  const userId = 'current_user_id'; 
 
   useEffect(() => {
     if (!id) {
@@ -25,7 +25,6 @@ export default function EventPage() {
         console.error("Error fetching events:", error);
       });
 
-    // Setting up WebSocket connection
     const ws = new WebSocket("ws://localhost:4000");
 
     ws.onopen = () => {
@@ -53,12 +52,10 @@ export default function EventPage() {
       eventId: id,
       userId: userId,
       name: 'User Name', 
-      // other ticket details
     })
     .then(response => {
       console.log('Ticket created successfully:', response.data);
-      // setAttendees(attendees+1);
-      // No need to update attendees here as it will be handled by WebSocket
+      
     })
     .catch(error => {
       console.error('Error creating ticket:', error);

@@ -9,7 +9,7 @@ export default function PaymentSummary() {
     const { id } = useParams();
     const { user } = useContext(UserContext);
     const [event, setEvent] = useState(null);
-    const [redirect, setRedirect] = useState(false);
+    const [redirect, setRedirect] = useState('');
 
     const [details, setDetails] = useState({
         name: '',
@@ -24,12 +24,54 @@ export default function PaymentSummary() {
         cvv: '123',
     });
 
-    useEffect(() => {
-        if (!id) return;
-        axios.get(`/event/${id}/ordersummary/paymentsummary`).then(response => {
-            setEvent(response.data);
-        }).catch(error => console.error("Error fetching events:", error));
+    const defaultTicketState = {
+      userid: user ? user._id : '',
+      eventid: '',
+      ticketDetails: {
+        name: user ? user.name : '',
+        email: user ? user.email : '',
+        eventname: '',
+        eventdate: '',
+        eventtime: '',
+        ticketprice: '',
+        qr: '',
+      }
+    };
+    const [ticketDetails, setTicketDetails] = useState(defaultTicketState);
+  
+    useEffect(()=>{
+      if(!id){
+        return;
+      }
+      axios.get(`/event/${id}/ordersummary/paymentsummary`).then(response => {
+        setEvent(response.data)
+
+        setTicketDetails(prevTicketDetails => ({
+          ...prevTicketDetails,
+          eventid: response.data._id,
+          ticketDetails: {
+            ...prevTicketDetails.ticketDetails,
+            eventname: response.data.title,
+            eventdate: response.data.eventDate.split("T")[0],
+            eventtime: response.data.eventTime,
+            ticketprice: response.data.ticketPrice,
+          }
+        }));
+      }).catch((error) => {
+        console.error("Error fetching events:", error);
+      });
     }, [id]);
+    useEffect(() => {
+      setTicketDetails(prevTicketDetails => ({
+        ...prevTicketDetails,
+        userid: user ? user._id : '',
+        ticketDetails: {
+          ...prevTicketDetails.ticketDetails,
+          name: user ? user.name : '',
+          email: user ? user.email : '',
+        }
+      }));
+    }, [user]);
 
     if (!event) return '';
 
@@ -39,21 +81,45 @@ export default function PaymentSummary() {
     };
 
     const createTicket = async (e) => {
-        e.preventDefault();
-        if (!details.name || !details.email || !details.contactNo) {
-            alert("Please fill in all required fields.");
-            return;
-        }
-        try {
-            const qrCode = await Qrcode.toDataURL(`Event: ${event.title}\nName: ${details.name}`);
-            await axios.post('/tickets', { ...details, qr: qrCode });
-            alert("Ticket Created");
-            setRedirect(true);
-        } catch (error) {
-            console.error('Error creating ticket:', error);
-        }
-    };
+      e.preventDefault();
+      if (!details.name || !details.email || !details.contactNo) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+      try {
+        const qrCode = await generateQRCode(
+          ticketDetails.ticketDetails.eventname,
+          ticketDetails.ticketDetails.name
+        );
+        const updatedTicketDetails = {
+          ...ticketDetails,
+          ticketDetails: {
+            ...ticketDetails.ticketDetails,
+            qr: qrCode,
+          }
+        };
+        const response = await axios.post(`/tickets`, updatedTicketDetails);
+        alert("Ticket Created");
+        setRedirect(true)
+        console.log('Success creating ticket', updatedTicketDetails)
+      } catch (error) {
+        console.error('Error creating ticket:', error);
+      }
+    
+    }
 
+    async function generateQRCode(name, eventName) {
+      try {
+        const qrCodeData = await Qrcode.toDataURL(
+            `Event Name: ${name} \n Name: ${eventName}`
+        );
+        return qrCodeData;
+      } catch (error) {
+        console.error("Error generating QR code:", error);
+        return null;
+      }
+    }
+ 
     if (redirect) {
         return <Navigate to={'/wallet'} />;
     }

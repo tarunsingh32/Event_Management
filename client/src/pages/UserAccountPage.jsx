@@ -13,7 +13,7 @@ export default function UserAccountPage() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 md:p-8 w-full max-w-sm sm:max-w-md md:max-w-lg text-center">
         <img
-          src="../src/assets/hero.jpg"
+          src="../src/assets/hero.png"
           alt="User Avatar"
           className="w-24 h-24 md:w-28 md:h-28 rounded-full mx-auto mb-4 border-4 border-blue-500"
         />

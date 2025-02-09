@@ -33,7 +33,7 @@ export default function Header() {
     <div>
       <header className='flex py-2 px-6 sm:px-6 justify-between items-center relative'>
         <Link to={'/'} className="flex items-center">
-          <img src="../src/assets/logo.png" alt="Logo" className='w-26 h-9'/>
+          <img src="../src/assets/logo.png" alt="Logo" className='w-35 h-12'/>
         </Link>
 
         <div className='flex bg-white rounded py-2.5 px-4 w-1/3 gap-4 items-center shadow-md shadow-gray-200'>
@@ -88,16 +88,12 @@ export default function Header() {
         {!!user && (
           <div className="hidden lg:flex items-center gap-2">
             <Link to={'/useraccount'} className="font-bold">{user.name.toUpperCase()}</Link>
+            <Link to={'/login'}>
             <button onClick={logout} className="flex items-center gap-1 text-red-500 hover:text-red-700">
               <RxExit className="w-5 h-5" /> Log out
             </button>
+            </Link>
           </div>
-        )}
-
-        {!user && (
-          <Link to={'/login'} className="hidden lg:block">
-            <button className="primary">Sign in</button>
-          </Link>
         )}
       </header>
     </div>

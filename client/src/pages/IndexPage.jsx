@@ -3,65 +3,42 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsArrowRightShort } from "react-icons/bs";
-import { BiLike } from "react-icons/bi";
 
 export default function IndexPage() {
   
   const [events, setEvents] = useState([]);
 
-  //! Fetch events from the server ---------------------------------------------------------------
   useEffect(() => {
     axios
       .get("/createEvent")
       .then((response) => {
-        setEvents(response.data || []); // Ensure response is always an array
+        setEvents(response.data || []); 
       })
       .catch((error) => {
         console.error("Error fetching events:", error);
-        setEvents([]); // Prevent crashing by setting an empty array
+        setEvents([]); 
       });
   }, []);
-
-  //! Like Functionality --------------------------------------------------------------
-  // const handleLike = (eventId) => {
-  //   axios
-  //     .post(`/event/${eventId}`)
-  //     .then((response) => {
-  //       setEvents((prevEvents) =>
-  //         prevEvents.map((event) =>
-  //           event._id === eventId
-  //             ? { ...event, likes: (event.likes || 0) + 1 }
-  //             : event
-  //         )
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error liking event:", error);
-  //     });
-  // };
 
   return (
     <>
       <div className="mt-1 flex flex-col">
-        {/* Hide Hero Section if Events Exist */}
         {events.length === 0 && (
           <div className="hidden sm:block">
             <div className="flex item-center inset-0">
-              <img src="../src/assets/hero.jpg" alt="" className="w-full" />
+              <img src="../src/assets/hero.png" alt="" className="w-full" />
             </div>
           </div>
         )}
 
         <div className="mx-10 my-5 grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:mx-5">
-          {/* Checking whether there are events or not */}
           {events.length > 0 &&
             events.map((event) => {
-              if (!event) return null; // Ensure event is defined
+              if (!event) return null; 
 
               const eventDate = new Date(event.eventDate || "");
               const currentDate = new Date();
 
-              //! Check if the event date is in the future
               if (eventDate >= currentDate) {
                 return (
                   <div
