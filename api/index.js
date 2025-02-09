@@ -15,17 +15,18 @@ const { log } = require("console");
 const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const { WebSocketServer } = require("ws");
+const connectDB = require("./config/db");
 
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "bsbsfbrnsftentwnnwnwn";
 
-cloudinary.config({
-   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-   api_key: process.env.CLOUDINARY_API_KEY,
-   api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// cloudinary.config({
+//    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//    api_key: process.env.CLOUDINARY_API_KEY,
+//    api_secret: process.env.CLOUDINARY_API_SECRET,
+// });
 
 // Middleware to handle file uploads
 app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
@@ -42,13 +43,14 @@ app.use(
    })
 );
 
-mongoose
-   .connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-   })
-   .then(() => console.log("Connected to MongoDB ✅"))
-   .catch((err) => console.error("MongoDB connection error ❌:", err));
+// mongoose
+//    .connect(process.env.MONGO_URL, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//    })
+//    .then(() => console.log("Connected to MongoDB ✅"))
+//    .catch((err) => console.error("MongoDB connection error ❌:", err));
+connectDB();
 
 app.use("/uploads", (req, res, next) => {
       const options = {
