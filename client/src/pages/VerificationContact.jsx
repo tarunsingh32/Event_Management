@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";  // For smooth animations
-
+import { motion } from "framer-motion";  
 const VerificationContact = () => {
   const [formData, setFormData] = useState({
     name: "",

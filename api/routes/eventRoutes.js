@@ -14,7 +14,6 @@ router.post("/createEvent", async (req, res) => {
  
        const imageFile = req.files.image;
  
-       // Upload image to Cloudinary
        const cloudinaryResponse = await cloudinary.uploader.upload(imageFile.tempFilePath, {
           folder: "events",
        });
@@ -28,8 +27,7 @@ router.post("/createEvent", async (req, res) => {
           location,
           Participants: Participants || 0,
           ticketPrice,
-        //   Quantity,
-          image: cloudinaryResponse.secure_url, // Save Cloudinary image URL
+          image: cloudinaryResponse.secure_url, 
        };
  
        const newEvent = new Event(eventData);
@@ -73,7 +71,6 @@ router.post("/createEvent", async (req, res) => {
        await event.save();
  
        res.json(event);
-       // Notify clients about the updated number of likes or attendees
        wss.clients.forEach(client => {
           if (client.readyState === 1) {
              client.send(JSON.stringify({ eventId, attendees: event.Participants, likes: event.likes }));

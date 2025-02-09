@@ -1,7 +1,6 @@
 const express = require("express");
 const TicketModel = require("../models/Ticket");
 const Event = require("../models/Event");
-// const { WebSocketServer } = require("ws");
 
 
 const router = express.Router();

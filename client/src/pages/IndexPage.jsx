@@ -71,18 +71,13 @@ export default function IndexPage() {
                     <div className="relative">
                       {event.image && (
                         <img
-                          src={event.image} // Cloudinary image URL
+                          src={event.image} 
                           alt={event.title || "Event Image"}
                           width="300"
                           height="200"
                           className="w-full h-52 object-cover"
                         />
                       )}
-                      {/* <div className="absolute flex gap-4 bottom-4 right-4">
-                        <button onClick={() => handleLike(event._id)}>
-                          <BiLike className="w-auto h-10 bg-white p-2 rounded-full shadow-md transition-all hover:text-primary" />
-                        </button>
-                      </div> */}
                     </div>
 
                     <div className="p-4 space-y-3">
@@ -113,18 +108,8 @@ export default function IndexPage() {
                           Organized By:{" "}
                           <strong>{event.organizedBy || "Unknown"}</strong>
                         </span>
-                        {/* <span>
-                          Created By:{" "}
-                          <strong>
-                            {event.owner ? event.owner.toUpperCase() : "Unknown"}
-                          </strong>
-                        </span> */}
+                      
                       </div>
-
-                      {/* ✅ Show Attendees Count
-                      <div className="text-sm font-medium text-blue-600">
-                        Attendees: {event.attendees || 0}
-                      </div> */}
 
                       <Link to={`/event/${event._id}`} className="block">
                         <button className="mt-2 flex items-center justify-center w-full gap-2 bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition">

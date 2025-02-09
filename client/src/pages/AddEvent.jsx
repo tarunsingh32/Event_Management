@@ -51,31 +51,26 @@ export default function AddEvent() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">📅 Post an Event</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Title */}
           <div>
             <label className="form-label">Event Title</label>
             <input type="text" name="title" className="input-box" value={formData.title} onChange={handleChange} />
           </div>
 
-          {/* Optional */}
           <div>
             <label className="form-label">Optional</label>
             <input type="text" name="optional" className="input-box" value={formData.optional} onChange={handleChange} />
           </div>
 
-          {/* Description */}
           <div>
             <label className="form-label">Description</label>
             <textarea name="description" className="input-box h-24" value={formData.description} onChange={handleChange}></textarea>
           </div>
 
-          {/* Organized By */}
           <div>
             <label className="form-label">Organized By</label>
             <input type="text" name="organizedBy" className="input-box" value={formData.organizedBy} onChange={handleChange} />
           </div>
 
-          {/* Event Date & Time */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="form-label">Event Date</label>
@@ -87,25 +82,21 @@ export default function AddEvent() {
             </div>
           </div>
 
-          {/* Location */}
           <div>
             <label className="form-label">Location</label>
             <input type="text" name="location" className="input-box" value={formData.location} onChange={handleChange} />
           </div>
 
-          {/* Ticket Price */}
           <div>
             <label className="form-label">Ticket Price</label>
             <input type="number" name="ticketPrice" className="input-box" value={formData.ticketPrice} onChange={handleChange} />
           </div>
 
-          {/* Image Upload */}
           <div>
             <label className="form-label">Event Image</label>
             <input type="file" name="image" className="input-box bg-white" onChange={handleImageUpload} />
           </div>
 
-          {/* Submit Button */}
           <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all">
             🚀 Submit Event
           </button>

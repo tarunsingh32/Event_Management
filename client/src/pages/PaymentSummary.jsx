@@ -1,280 +1,166 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios';
-import  { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import {IoMdArrowBack} from 'react-icons/io'
+import { IoMdArrowBack } from 'react-icons/io';
 import { UserContext } from '../UserContext';
-import Qrcode from 'qrcode' //TODO:
+import Qrcode from 'qrcode';
 
 export default function PaymentSummary() {
-    const {id} = useParams();
+    const { id } = useParams();
+    const { user } = useContext(UserContext);
     const [event, setEvent] = useState(null);
-    const {user} = useContext(UserContext);
+    const [redirect, setRedirect] = useState(false);
+
     const [details, setDetails] = useState({
-      name: '',
-      email: '',
-      contactNo: '',
+        name: '',
+        email: '',
+        contactNo: '',
     });
-//!Adding a default state for ticket-----------------------------
-    const defaultTicketState = {
-      userid: user ? user._id : '',
-      eventid: '',
-      ticketDetails: {
-        name: user ? user.name : '',
-        email: user ? user.email : '',
-        eventname: '',
-        eventdate: '',
-        eventtime: '',
-        ticketprice: '',
-        qr: '',
-      }
-    };
-//! add default state to the ticket details state
-    const [ticketDetails, setTicketDetails] = useState(defaultTicketState);
 
     const [payment, setPayment] = useState({
-      nameOnCard: '',
-      cardNumber: '',
-      expiryDate: '',
-      cvv: '',
+        nameOnCard: 'John Doe',
+        cardNumber: '1234 5678 9012 3456',
+        expiryDate: '12/26',
+        cvv: '123',
     });
-    const [redirect, setRedirect] = useState('');
-  
-    useEffect(()=>{
-      if(!id){
-        return;
-      }
-      axios.get(`/event/${id}/ordersummary/paymentsummary`).then(response => {
-        setEvent(response.data)
 
-        setTicketDetails(prevTicketDetails => ({
-          ...prevTicketDetails,
-          eventid: response.data._id,
-       //!capturing event details from backend for ticket----------------------
-          ticketDetails: {
-            ...prevTicketDetails.ticketDetails,
-            eventname: response.data.title,
-            eventdate: response.data.eventDate.split("T")[0],
-            eventtime: response.data.eventTime,
-            ticketprice: response.data.ticketPrice,
-          }
-        }));
-      }).catch((error) => {
-        console.error("Error fetching events:", error);
-      });
-    }, [id]);
-//! Getting user details using useeffect and setting to new ticket details with previous details
     useEffect(() => {
-      setTicketDetails(prevTicketDetails => ({
-        ...prevTicketDetails,
-        userid: user ? user._id : '',
-        ticketDetails: {
-          ...prevTicketDetails.ticketDetails,
-          name: user ? user.name : '',
-          email: user ? user.email : '',
-        }
-      }));
-    }, [user]);
-    
-    
+        if (!id) return;
+        axios.get(`/event/${id}/ordersummary/paymentsummary`).then(response => {
+            setEvent(response.data);
+        }).catch(error => console.error("Error fetching events:", error));
+    }, [id]);
+
     if (!event) return '';
 
     const handleChangeDetails = (e) => {
-      const { name, value } = e.target;
-      setDetails((prevDetails) => ({
-        ...prevDetails,
-        [name]: value,
-      }));
+        const { name, value } = e.target;
+        setDetails(prev => ({ ...prev, [name]: value }));
     };
-  
-    const handleChangePayment = (e) => {
-      const { name, value } = e.target;
-      setPayment((prevPayment) => ({
-        ...prevPayment,
-        [name]: value,
-      }));
-    };
-//! creating a ticket ------------------------------
-    const createTicket = async (e) => {
-  e.preventDefault();
-//!adding a ticket qr code to booking ----------------------
-  try {
-    const qrCode = await generateQRCode(
-      ticketDetails.ticketDetails.eventname,
-      ticketDetails.ticketDetails.name
-    );
-//!updating the ticket details qr with prevoius details ------------------
-    const updatedTicketDetails = {
-      ...ticketDetails,
-      ticketDetails: {
-        ...ticketDetails.ticketDetails,
-        qr: qrCode,
-      }
-    };
-//!posting the details to backend ----------------------------
-    const response = await axios.post('/tickets', updatedTicketDetails);
-    alert("Ticket Created");
-    setRedirect(true)
-    console.log('Success creating ticket', updatedTicketDetails)
-  } catch (error) {
-    console.error('Error creating ticket:', error);
-  }
 
-}
-//! Helper function to generate QR code ------------------------------
-async function generateQRCode(name, eventName) {
-  try {
-    const qrCodeData = await Qrcode.toDataURL(
-        `Event Name: ${name} \n Name: ${eventName}`
-    );
-    return qrCodeData;
-  } catch (error) {
-    console.error("Error generating QR code:", error);
-    return null;
-  }
-}
-if (redirect){
-  return <Navigate to={'/wallet'} />
-}
+    const createTicket = async (e) => {
+        e.preventDefault();
+        if (!details.name || !details.email || !details.contactNo) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+        try {
+            const qrCode = await Qrcode.toDataURL(`Event: ${event.title}\nName: ${details.name}`);
+            await axios.post('/tickets', { ...details, qr: qrCode });
+            alert("Ticket Created");
+            setRedirect(true);
+        } catch (error) {
+            console.error('Error creating ticket:', error);
+        }
+    };
+
+    if (redirect) {
+        return <Navigate to={'/wallet'} />;
+    }
+
     return (
-      <>
-      <div>
-      <Link to={'/event/'+event._id+ '/ordersummary'}>
-                
-       <button 
-              // onClick={handleBackClick}
-              className='
-              inline-flex 
-              mt-12
-              gap-2
-              p-3 
-              ml-12
-              bg-gray-100
-              justify-center 
-              items-center 
-              text-blue-700
-              font-bold
-              rounded-sm'
-              >
-                
-          <IoMdArrowBack 
-            className='
-            font-bold
-            w-6
-            h-6
-            gap-2'/> 
-            Back
-          </button>
-          </Link>
-          </div>
-      <div className="ml-12 bg-gray-100 shadow-lg mt-8 p-16 w-3/5 float-left">
-          {/* Your Details */}
-          <div className="mt-8 space-y-4">
-            <h2 className="text-xl font-bold mb-4">Your Details</h2>
-            <input
-              type="text"
-              name="name"
-              value={details.name}
-              onChange={handleChangeDetails}
-              placeholder="Name"
-              className="input-field ml-10 w-80 h-10 bg-gray-50 border border-gray-30  rounded-md p-2.5"
-            />
-            <input
-              type="email"
-              name="email"
-              value={details.email}
-              onChange={handleChangeDetails}
-              placeholder="Email"
-              className="input-field w-80 ml-3 h-10 bg-gray-50 border border-gray-30  rounded-sm p-2.5"
-            />
-            <div className="flex space-x-4">
-            <input
-              type="tel"
-              name="contactNo"
-              value={details.contactNo}
-              onChange={handleChangeDetails}
-              placeholder="Contact No"
-              className="input-field ml-10 w-80 h-10 bg-gray-50 border border-gray-30 rounded-sm p-2.5"
-            />
+        <div className="container mx-auto px-4 py-6">
+            <Link to={`/event/${event._id}/ordersummary`} className="flex items-center gap-2 text-blue-600 font-bold">
+                <IoMdArrowBack className="w-6 h-6" />
+                Back
+            </Link>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                {/* Payment Form */}
+                <div className="md:col-span-2 bg-gray-100 shadow-lg p-6 rounded-lg">
+                    <h2 className="text-xl font-bold mb-4">Your Details</h2>
+                    <div className="space-y-4">
+                        <input
+                            type="text"
+                            name="name"
+                            value={details.name}
+                            onChange={handleChangeDetails}
+                            placeholder="Name *"
+                            className="w-full p-3 border rounded-md"
+                            required
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            value={details.email}
+                            onChange={handleChangeDetails}
+                            placeholder="Email *"
+                            className="w-full p-3 border rounded-md"
+                            required
+                        />
+                        <input
+                            type="tel"
+                            name="contactNo"
+                            value={details.contactNo}
+                            onChange={handleChangeDetails}
+                            placeholder="Contact No *"
+                            className="w-full p-3 border rounded-md"
+                            required
+                        />
+                    </div>
+
+                    {/* Payment Section */}
+                    <h2 className="text-xl font-bold mt-8">Payment Option</h2>
+                    <div className="mt-4">
+                        <button className="w-full py-3 text-black bg-blue-100 border rounded-md" disabled>
+                            Credit / Debit Card
+                        </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <input
+                            type="text"
+                            name="nameOnCard"
+                            value={payment.nameOnCard}
+                            className="p-3 border rounded-md"
+                            disabled
+                        />
+                        <input
+                            type="text"
+                            name="cardNumber"
+                            value={payment.cardNumber}
+                            className="p-3 border rounded-md"
+                            disabled
+                        />
+                        <input
+                            type="text"
+                            name="expiryDate"
+                            value={payment.expiryDate}
+                            className="p-3 border rounded-md"
+                            disabled
+                        />
+                        <input
+                            type="text"
+                            name="cvv"
+                            value={payment.cvv}
+                            className="p-3 border rounded-md"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                {/* Order Summary */}
+                <div className="bg-blue-100 p-6 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <h2 className="text-xl font-bold">Order Summary</h2>
+                        <p className="mt-4 font-semibold">{event.title}</p>
+                        <p className="text-sm">{event.eventDate.split("T")[0]}, {event.eventTime}</p>
+                        <hr className="my-4" />
+                        <p className="flex justify-between text-lg font-bold">
+                            <span>Subtotal:</span>
+                            <span>LKR. {event.ticketPrice}</span>
+                        </p>
+                    </div>
+
+                    {/* New Button Placement */}
+                    <button
+                        onClick={createTicket}
+                        className="w-full mt-6 bg-blue-600 text-white py-3 rounded-md"
+                    >
+                        Make Payment
+                    </button>
+                </div>
             </div>
-          </div>
-  
-          {/* Payment Option */}
-     
-          <div className="mt-10 space-y-4">
-            <h2 className="text-xl font-bold mb-4">Payment Option</h2>
-            <div className="ml-10">
-            <button type="button" className="px-8 py-3 text-black bg-blue-100  focus:outline border rounded-sm border-gray-300" disabled>Credit / Debit Card</button>
-            </div>
-          
-            <input
-              type="text"
-              name="nameOnCard"
-              value= "A.B.S.L. Perera"                       
-              onChange={handleChangePayment}
-              placeholder="Name on Card"
-              className="input-field w-80 ml-10 h-10 bg-gray-50 border border-gray-30  rounded-sm p-2.5"
-            />
-            <input
-              type="text"
-              name="cardNumber"
-              value="5648 3212 7802"
-              onChange={handleChangePayment}
-              placeholder="Card Number"
-              className="input-field w-80 ml-3 h-10 bg-gray-50 border border-gray-30 rounded-sm p-2.5"
-            />
-            <div className="flex space-x-4">
-              <div className="relative">
-              <input
-                type="text"
-                name="expiryDate"
-                value="12/25"
-                onChange={handleChangePayment}
-                placeholder="Expiry Date (MM/YY)"
-                className="input-field w-60 ml-10 h-10 bg-gray-50 border border-gray-30  rounded-sm p-2.5"
-              />
-              
-              </div>
-             
-              <input
-                type="text"
-                name="cvv"
-                value="532"
-                onChange={handleChangePayment}
-                placeholder="CVV"
-                className="input-field w-16 h-10 bg-gray-50 border border-gray-30  rounded-sm p-3"
-              />
-            </div>
-            <div className="float-right">
-            <p className="text-sm font-semibold pb-2 pt-8">Total : LKR. {event.ticketPrice}</p>
-            <Link to={'/'}>
-              <button type="button" 
-                onClick = {createTicket}
-                className="primary">
-                
-               
-                Make Payment</button>
-              </Link>
-            </div>
-            
-          </div>
-      </div>
-      <div className="float-right bg-blue-100 w-1/4 p-5 mt-8 mr-12">
-          <h2 className="text-xl font-bold mb-8">Order Summary</h2>
-          <div className="space-y-1">
-            
-            <div>
-               <p className="float-right">1 Ticket</p>
-            </div>
-            <p className="text-lg font-semibold">{event.title}</p>
-            <p className="text-xs">{event.eventDate.split("T")[0]},</p>
-            <p className="text-xs pb-2"> {event.eventTime}</p>
-            <hr className=" my-2 border-t pt-2 border-gray-400" />
-            <p className="float-right font-bold">LKR. {event.ticketPrice}</p>
-            <p className="font-bold">Sub total: {event.ticketPrice}</p>
-          </div>
-          
         </div>
-      </>
     );
 }

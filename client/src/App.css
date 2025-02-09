@@ -1,10 +1,9 @@
 .container{
   
-  width: 80vw; /* 80% of the viewport width */
-  max-width: 1200px; /* maximum width for the container */
+  width: 80vw;
+  max-width: 1200px;
   height: 650px;
 
-  /* add flex style */
   display: flex;
   justify-content: space-around;
   align-content: center;
@@ -14,12 +13,10 @@
   transform: translate(-50%, -50%);
   
 }
-/* Apply to all input fields */
 .input-box {
   @apply w-full p-3 border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400;
 }
 
-/* Label styling */
 .form-label {
   @apply block text-gray-700 font-semibold mb-2;
 }
@@ -81,7 +78,6 @@
   margin-top: 10px;
 }
 
-/* icons positoning starts*/
 .name,
 .email,
 .passw,
@@ -92,7 +88,6 @@
   padding: 14px 0 0 20px;
 }
 
-/* icon positioning ends */
 
 .form-group{
   padding-top: 20px;
@@ -177,7 +172,6 @@
 
 
 
-/* Media Queries */
 
 @media (max-width: 768px) {
   .container {
@@ -234,7 +228,6 @@
 
 
 
-/* Login CSS temp  */
 
 .outermainDiv{
   display: flex;
@@ -493,7 +486,7 @@ transition: all 0.2s ease-in-out;
 .truncate-3-lines {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-line-clamp: 3; 
   overflow: hidden;
   text-overflow: ellipsis;
 }

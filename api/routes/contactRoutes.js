@@ -1,6 +1,5 @@
 const express = require("express");
 const ContactMessage = require("../models/ContactMessage");
-// const ContactSupport = require("../models/ContactSupport");
 
 const router = express.Router();
 
@@ -16,7 +15,6 @@ router.post("/contact-support", async (req, res) => {
     }
  });
  
- // Route to fetch all contact messages (for admin/support)
  router.get("/contact-support", async (req, res) => {
     try {
        const messages = await ContactMessage.find();

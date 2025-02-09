@@ -16,7 +16,6 @@ import CalendarView from './pages/CalendarView'
 import OrderSummary from './pages/OrderSummary'
 import PaymentSummary from './pages/PaymentSummary'
 import TicketPage from './pages/TicketPage'
-// import CreatEvent from './pages/CreateEvent'
 import VerificationContact from './pages/VerificationContact'
 
 axios.defaults.baseURL = 'http://localhost:4000/';

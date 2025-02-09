@@ -70,10 +70,10 @@ router.post("/register", async (req, res) => {
  
  router.post("/logout", (req, res) => {
     res.cookie("token", "", {
-       httpOnly: true,   // Prevents JavaScript access
-       secure: true,     // Works only on HTTPS
-       sameSite: "None", // Allows cross-site requests
-       expires: new Date(0), // Expire immediately
+       httpOnly: true,   
+       secure: true,     
+       sameSite: "None", 
+       expires: new Date(0), 
     }).json({ message: "Logged out successfully" });
  });
  
