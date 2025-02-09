@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const EventSchema = new mongoose.Schema(
   {
@@ -30,12 +30,12 @@ const EventSchema = new mongoose.Schema(
     image: {
       type: String,
       default: "",
-    },
+    }, 
     ticketPrice: {
       type: Number,
       default: 0, // 0 means free
     },
-    participants: {
+    Participants: {
       type: Number,
       default: 0,
     },
@@ -44,4 +44,4 @@ const EventSchema = new mongoose.Schema(
 );
 
 const Event = mongoose.model("Event", EventSchema);
-export default Event;
+module.exports = Event;

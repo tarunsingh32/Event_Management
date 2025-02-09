@@ -5,7 +5,7 @@ import { UserContext } from '../UserContext';
 export default function AddEvent() {
   const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
-    // owner: user ? user.name : "",
+    owner: user ? user.name : "",
     title: "",
     optional: "",
     description: "",

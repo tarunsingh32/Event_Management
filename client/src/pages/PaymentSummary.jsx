@@ -112,7 +112,7 @@ export default function PaymentSummary() {
       }
     };
 //!posting the details to backend ----------------------------
-    const response = await axios.post(`/tickets`, updatedTicketDetails);
+    const response = await axios.post('/tickets', updatedTicketDetails);
     alert("Ticket Created");
     setRedirect(true)
     console.log('Success creating ticket', updatedTicketDetails)

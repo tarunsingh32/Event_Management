@@ -15,5 +15,5 @@ const ticketSchema = new mongoose.Schema({
    count: { type: Number, default: 0 },
 });
 
-const TicketModel = mongoose.model(`Ticket`, ticketSchema);
-module.exports = TicketModel;
+const Ticket = mongoose.model('Ticket', ticketSchema);
+module.exports = Ticket;

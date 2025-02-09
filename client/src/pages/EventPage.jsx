@@ -57,6 +57,7 @@ export default function EventPage() {
     })
     .then(response => {
       console.log('Ticket created successfully:', response.data);
+      // setAttendees(attendees+1);
       // No need to update attendees here as it will be handled by WebSocket
     })
     .catch(error => {
