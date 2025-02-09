@@ -132,7 +132,6 @@ export default function PaymentSummary() {
             </Link>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                {/* Payment Form */}
                 <div className="md:col-span-2 bg-gray-100 shadow-lg p-6 rounded-lg">
                     <h2 className="text-xl font-bold mb-4">Your Details</h2>
                     <div className="space-y-4">
@@ -165,7 +164,6 @@ export default function PaymentSummary() {
                         />
                     </div>
 
-                    {/* Payment Section */}
                     <h2 className="text-xl font-bold mt-8">Payment Option</h2>
                     <div className="mt-4">
                         <button className="w-full py-3 text-black bg-blue-100 border rounded-md" disabled>
@@ -205,7 +203,6 @@ export default function PaymentSummary() {
                     </div>
                 </div>
 
-                {/* Order Summary */}
                 <div className="bg-blue-100 p-6 rounded-lg flex flex-col justify-between">
                     <div>
                         <h2 className="text-xl font-bold">Order Summary</h2>
@@ -218,7 +215,6 @@ export default function PaymentSummary() {
                         </p>
                     </div>
 
-                    {/* New Button Placement */}
                     <button
                         onClick={createTicket}
                         className="w-full mt-6 bg-blue-600 text-white py-3 rounded-md"

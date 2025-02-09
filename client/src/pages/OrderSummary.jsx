@@ -31,7 +31,6 @@ export default function OrderSummary() {
             </Link>
             
             <div className="flex flex-col md:flex-row mt-6 gap-6">
-                {/* Terms & Conditions */}
                 <div className="p-4 bg-gray-100 w-full md:w-3/4">
                     <h2 className="text-left font-bold">Terms & Conditions</h2>
                     <ul className="mt-4 space-y-3 text-sm">
@@ -45,7 +44,6 @@ export default function OrderSummary() {
                     </ul>
                 </div>
 
-                {/* Booking Summary */}
                 <div className="bg-blue-100 p-4 w-full md:w-1/4">
                     <h2 className="font-bold">Booking Summary</h2>
                     <div className="text-sm flex justify-between mt-5">

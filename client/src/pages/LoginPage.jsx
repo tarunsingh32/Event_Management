@@ -80,12 +80,6 @@ export default function LoginPage() {
                 <button className="text-black border rounded w-full py-2 font-bold">Sign Up</button>
               </Link>
             </div>
-
-            {/* <Link to={'/'} className="mt-5">
-              <button className="secondary flex items-center">
-                <span className="mr-2">⬅</span> Back 
-              </button>
-            </Link> */}
         </form>
       </div>
 

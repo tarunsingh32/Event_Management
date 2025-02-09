@@ -103,11 +103,9 @@ export default function AddEvent() {
             <label className="form-label">Event Image</label>
             <input type="file" name="image" className="input-box bg-white" onChange={handleImageUpload} required/>
           </div>
-          {/* <Link to={'/'}> */}
           <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-all">
             🚀 Submit Event
           </button>
-          {/* </Link> */}
           
         </form>
       </div>

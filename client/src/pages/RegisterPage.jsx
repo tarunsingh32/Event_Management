@@ -62,22 +62,13 @@ export default function RegisterPage() {
             <input type="password" placeholder="Confirm Password" className="input-et w-full outline-none" value={confirmPassword} onChange={ev => setConfirmPassword(ev.target.value)} />
           </div>
           
-          {/* <button type="submit" className="bg-primary text-white w-full py-3 mt-5 font-bold rounded">Create Account</button> */}
           
           <div className="flex flex-col sm:flex-row gap-2 w-full mt-5">
             <Link to={'/login'} className="w-full">
               <button className="text-black border rounded w-full py-2 font-bold">Sign In</button>
             </Link>
-            {/* <Link to={'/register'} className="w-full"> */}
               <button type="submit"  className="text-white bg-primary rounded w-full py-2 font-bold">Sign Up</button>
-            {/* </Link> */}
           </div>
-          
-          {/* <Link to={'/'} className="mt-5">
-            <button className="secondary flex items-center">
-              <span className="mr-2">⬅</span> Back 
-            </button>
-          </Link> */}
         </form>
       </div>
     </div>
