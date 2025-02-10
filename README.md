@@ -1,49 +1,97 @@
-# EventoEMS - Event Management System
 
-Introducing our Event Management System, a solution developed as part of our final year group project, designed to streamline campus event planning, registration, and ticket booking. I played a key role as the architect, creating the user interface where I incorporated modern design principles and prioritized user experience. We are developing the system using the MERN stack (MongoDB, Express.js, React.js, Node.js), and we are utilizing the agile Scrum methodology for efficient development.
+# EMS(Event Management System)
 
-**Skills:** *Figma · Ui/ux · React.js · MongoDB · Node.js · Express.js · Requirements Analysis · User Interface Design*
+Introducing our Event Management System, a solution developed to designed and streamline campus event planning, registration, and ticket booking. This EMS system is developed using the MERN stack (MongoDB, Express.js, React.js, Node.js), and we are utilizing the agile Scrum methodology for efficient development.
 
-**Features**
-* Schedule a Event.
-* View upcoming events.
-* View the event calendar.
-* Getting approval for the events.
-* Ticket Booking for the event.
-* QR Code generation for receiving tickets.
 
-**Technologies Used**
-* ReactJs
-* NodeJs
-* ExpressJs
-* MongoDB
-* NPM (Node Package Manager)
-* JWT webtoken
-* QR code
+## Skills  
 
-**_Getting Started_**
+- Figma 
+- React.js 
+- MongoDB
+- Node.js 
+- Express.js 
+- Requirements Analysis 
+- webSockets 
+- User Interface Design
+- TailwindCSS
 
-**Prerequisites**
-* Node.js and npm installed
-* MongoDB Database
+## Features
+- Schedule a Event.
+- View upcoming events.
+- View the event calendar.
+- Ticket Booking for the event.
+- QR Code generation for receiving tickets.
 
-**Instalaltion**
-1. Clone the repository to your local machine.
-2. Navigate to the project directory. use two terminal <br>
-    **Cd Client** - For Frontend <br>
-    **Cd api** - For Backend <br>
-3. Install server dependenciesfor both frontend and backend.
-4. Create a .env file in the root directory with the following content, and replace placeholders with your own values. <br>
-     MONGODB_URI=mongodb://localhost/your-database-name
-5. Start the server.<br>
-     **ems/api:** nodemon start<br>
-     if the command is not working use **PowerShell -ExecutionPolicy Bypass nodemon** this command.
-7. Start the Client:<br>
-      **ems/client:** npm run dev
 
-**The application should now be running. You can access it at http://localhost:5173**<br>
-**The Server is running on http://localhost:4000**
+## Installation
 
-<h1>Thank You</h1>
+For Frontend
 
-![portfolio_1](https://github.com/Bilal025/EventoEMS/assets/95700674/001ddf1c-72b3-40bb-8e3e-975ae00ccee5)
+```bash
+  cd client
+  npm init
+  npm i
+```
+
+For Backend
+
+```bash
+  cd api
+  npm init
+  npm i
+```
+
+To run the Frontend
+
+```bash
+   npm run dev 
+```
+To run the Backend
+
+```bash
+    npm start or
+    node index.js
+```
+To build the client
+
+```bash
+    npm run build
+```
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`MONGO_URL`
+
+`CLOUDINARY_API_KEY`
+
+`CLOUDINARY_API_SECRET`
+
+`CLOUDINARY_CLOUD_NAME`
+
+`FRONTEND_URL`
+
+`JWT_SECRET`
+
+`PORT`
+
+
+## Deployment
+
+To deploy the frontend
+
+```bash
+  npm run build
+```
+
+# Hi, I'm Tarun! 👋
+
+## 🔗 Links
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tarun-kumar-singh-90150322a/?profileId=ACoAADliNVEB4mq25SIJr9lOjkXLGKYR7ts1hTY)
+[![twitter](https://img.shields.io/badge/GeeksForgeeks-06402B?style=for-the-badge&logo=gfg&logoColor=white)](https://www.geeksforgeeks.org/user/user_i6wrf680cay/)
+[![Leetcode](https://img.shields.io/badge/Leetcode-743D2B?style=for-the-badge&logo=gfg&logoColor=white)](https://leetcode.com/u/comrade_tarun/)
+
