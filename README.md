@@ -86,7 +86,7 @@ To deploy the frontend
 ```bash
   npm run build
 ```
-
+[Live](https://event-ems.netlify.app/)
 # Hi, I'm Tarun! 👋
 
 ## 🔗 Links
